@@ -1,3 +1,10 @@
+// カスタムアラートの表示
+function showCustomAlert(message) {
+    document.getElementById('customAlertMessage').innerHTML = message;
+    document.getElementById('customAlertOverlay').classList.add('active');
+}
+
+
 document.addEventListener('DOMContentLoaded', function() {
     // トグルセクションの動作設定
     const toggleMessages = document.getElementById('toggleMessages');
@@ -36,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const slackUserToken = document.getElementById('slackUserToken').value;
         const slackChannelId = document.getElementById('slackChannelId').value;
         if (!slackUserToken || !slackChannelId) {
-            alert('SlackユーザートークンとチャンネルIDを入力してください');
+            showCustomAlert('SlackユーザートークンとチャンネルIDを入力してください');
             console.warn('[popup.js] 入力不足: slackUserToken, slackChannelId', { slackUserToken, slackChannelId });
             return;
         }
@@ -63,9 +70,9 @@ document.addEventListener('DOMContentLoaded', function() {
             function(response) {
                 // console.log('[popup.js] saveSettingsレスポンス:', response);
                 if (response.success) {
-                    alert('設定を保存しました。\nfreeeの勤怠ページをリロードしてください（再読み込みしないと新しい設定が反映されません）');
+                    showCustomAlert('設定を保存しました。<br>freeeの勤怠ページをリロードしてください（再読み込みしないと新しい設定が反映されません）');
                 } else {
-                    alert('設定の保存に失敗しました');
+                    showCustomAlert('設定の保存に失敗しました');
                     console.error('[popup.js] 設定保存失敗:', response);
                 }
             }

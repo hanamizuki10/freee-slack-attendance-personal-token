@@ -59,6 +59,46 @@
         .custom-messages.show {
             display: block;
         }
+        /* --- カスタムアラート用モーダルスタイル --- */
+        #customAlertOverlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.18);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+        #customAlertOverlay.active {
+            display: flex;
+        }
+        #customAlertBox {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+            padding: 18px 18px 14px 18px; /* 上部余白を減らす */
+            min-width: 320px;
+            max-width: 90vw;
+            text-align: center;
+        }
+        #customAlertBox h2 {
+            margin: 0 0 10px 0;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+        #customAlertBox p {
+            margin: 0 0 18px 0;
+            font-size: 1em;
+        }
+        #customAlertBox button {
+            padding: 6px 24px;
+            background: #2196F3;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 1em;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -92,6 +132,13 @@
         </div>
         
         <button id="saveButton">保存</button>
+    </div>
+    <div id="customAlertOverlay">
+      <div id="customAlertBox">
+        <h2>拡張機能 freee勤怠<br>Slack個人通知 の記述</h2>
+        <p id="customAlertMessage"></p>
+        
+      </div>
     </div>
     <script src="popup.js"></script>
 </body>

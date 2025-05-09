@@ -1,3 +1,17 @@
+// カスタムアラートの表示
+function showCustomAlert(message) {
+    // popup.html内にカスタムアラート要素が存在する場合のみ動作
+    const alertMsg = document.getElementById('customAlertMessage');
+    const alertOverlay = document.getElementById('customAlertOverlay');
+    if (alertMsg && alertOverlay) {
+        alertMsg.innerHTML = message;
+        alertOverlay.classList.add('active');
+    } else {
+        // popup.html以外では通常のalertでフォールバック
+        alert(message);
+    }
+}
+
 // Slackユーザートークン・チャンネルIDの初期値
 let SLACK_USER_TOKEN = '';
 let SLACK_CHANNEL_ID = '';
@@ -127,7 +141,7 @@ function hookButtons() {
 // Slackにメッセージを送信（background.js経由でCORS回避）
 async function sendSlackMessage(message) {
     if (!SLACK_USER_TOKEN || !SLACK_CHANNEL_ID) {
-        alert('SlackユーザートークンまたはチャンネルIDが設定されていません。設定画面で入力してください。');
+        showCustomAlert('SlackユーザートークンまたはチャンネルIDが設定されていません。設定画面で入力してください。');
         return;
     }
     try {
@@ -141,12 +155,12 @@ async function sendSlackMessage(message) {
                 // 成功時は特に何もしない（必要ならここで通知）
             } else {
                 let errorMsg = (response && response.error) ? response.error : 'Slack APIエラー';
-                alert(`Slackメッセージ送信失敗: ${errorMsg}`);
+                showCustomAlert(`Slackメッセージ送信失敗: ${errorMsg}`);
                 console.error('Slackメッセージ送信失敗:', errorMsg, response);
             }
         });
     } catch (error) {
-        alert(`Slackメッセージ送信中にエラー: ${error.message}`);
+        showCustomAlert(`Slackメッセージ送信中にエラー: ${error.message}`);
         console.error('Slackメッセージ送信中にエラー:', error);
     }
 }
