@@ -83,8 +83,7 @@ function hookButtons() {
         
         // クリックイベントリスナーを設定 - キャプチャフェーズで処理
         button.addEventListener('click', function(event) {
-            // イベントの伝播を停止しないように変更
-            // 元のボタンアクションも実行されるようにする
+            // NOTE:イベントの伝播を停止しない（元のボタンアクションも実行されるようにする）
             
             // console.log(`ボタンがクリックされました: ${buttonText}`);
             
