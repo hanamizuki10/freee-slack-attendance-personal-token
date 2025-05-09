@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "freee勤怠Slack通知ツール",
+  "name": "freee勤怠Slack個人通知",
   "version": "1.0",
   "description": "freeeの出勤・退勤ボタンをクリックするとSlackに通知を送信します",
   "permissions": [
@@ -9,7 +9,8 @@
     "storage"
   ],
   "host_permissions": [
-    "https://hooks.slack.com/*"
+    "https://hooks.slack.com/*",
+    "https://slack.com/api/*"
   ],
   "content_scripts": [
     {

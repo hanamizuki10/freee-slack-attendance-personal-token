@@ -1,5 +1,6 @@
-// Slack Webhook URLの初期値
-let SLACK_WEBHOOK_URL = '';
+// Slackユーザートークン・チャンネルIDの初期値
+let SLACK_USER_TOKEN = '';
+let SLACK_CHANNEL_ID = '';
 
 // カスタムメッセージの初期値
 let CUSTOM_MESSAGES = {
@@ -11,13 +12,15 @@ let CUSTOM_MESSAGES = {
 
 // chrome.storage.localから設定を取得
 chrome.storage.local.get([
-    'slackWebhookUrl', 
-    'messageClockIn', 
-    'messageClockOut', 
-    'messageBreakStart', 
+    'slackUserToken',
+    'slackChannelId',
+    'messageClockIn',
+    'messageClockOut',
+    'messageBreakStart',
     'messageBreakEnd'
 ], function(result) {
-    SLACK_WEBHOOK_URL = result.slackWebhookUrl || '';
+    SLACK_USER_TOKEN = result.slackUserToken || '';
+    SLACK_CHANNEL_ID = result.slackChannelId || '';
     CUSTOM_MESSAGES.clockIn = result.messageClockIn || '';
     CUSTOM_MESSAGES.clockOut = result.messageClockOut || '';
     CUSTOM_MESSAGES.breakStart = result.messageBreakStart || '';
@@ -27,8 +30,11 @@ chrome.storage.local.get([
 // 設定変更を監視
 chrome.storage.onChanged.addListener(function(changes, namespace) {
     if (namespace === 'local') {
-        if (changes.slackWebhookUrl) {
-            SLACK_WEBHOOK_URL = changes.slackWebhookUrl.newValue || '';
+        if (changes.slackUserToken) {
+            SLACK_USER_TOKEN = changes.slackUserToken.newValue || '';
+        }
+        if (changes.slackChannelId) {
+            SLACK_CHANNEL_ID = changes.slackChannelId.newValue || '';
         }
         if (changes.messageClockIn) {
             CUSTOM_MESSAGES.clockIn = changes.messageClockIn.newValue || '';
@@ -118,55 +124,30 @@ function hookButtons() {
     }
 }
 
-// Slackにメッセージを送信
-function sendSlackMessage(message) {
-    // console.log(`送信しようとしているメッセージ: ${message}`);
-    
-    if (!SLACK_WEBHOOK_URL) {
-        console.error('Slack Webhook URLが設定されていません');
-        alert('Slack Webhook URLが設定されていません。拡張機能の設定画面で設定してください。');
+// Slackにメッセージを送信（background.js経由でCORS回避）
+async function sendSlackMessage(message) {
+    if (!SLACK_USER_TOKEN || !SLACK_CHANNEL_ID) {
+        alert('SlackユーザートークンまたはチャンネルIDが設定されていません。設定画面で入力してください。');
         return;
     }
-
-    // console.log(`Webhook URL: ${SLACK_WEBHOOK_URL.substring(0, 20)}... を使用します`);
-    // console.log('background.jsにメッセージ送信を依頼します...');
-    
     try {
-        // background.jsにメッセージ送信を依頼
-        chrome.runtime.sendMessage(
-            { 
-                type: 'sendSlackMessage', 
-                slackWebhookUrl: SLACK_WEBHOOK_URL, 
-                message: message 
-            },
-            function(response) {
-                if (chrome.runtime.lastError) {
-                    console.error('拡張機能の通信エラー:', chrome.runtime.lastError.message);
-                    alert(`メッセージ送信に失敗しました: 拡張機能の通信エラー`);
-                    return;
-                }
-                
-                if (response && response.success) {
-                    // console.log('メッセージ送信が成功しました！');
-                    // 成功時にユーザーに通知する場合はここにコードを追加
-                } else {
-                    const errorMsg = response ? response.error : 'レスポンスがありません';
-                    console.error('メッセージ送信に失敗しました:', errorMsg);
-                    
-                    // Webhook URLが無効な場合のメッセージ
-                    if (errorMsg.includes('403') || errorMsg.includes('404') || errorMsg.includes('invalid')) {
-                        alert('無効なSlack Webhook URLです。URLを確認して再設定してください。');
-                    } else if (errorMsg.includes('CORS')) {
-                        alert('CORSポリシーによりリクエストがブロックされました。SlackのWebhook URLが正しいか確認してください。');
-                    } else {
-                        alert(`メッセージ送信に失敗しました: ${errorMsg}`);
-                    }
-                }
+        chrome.runtime.sendMessage({
+            type: 'sendSlackMessage',
+            slackUserToken: SLACK_USER_TOKEN,
+            slackChannelId: SLACK_CHANNEL_ID,
+            message: message
+        }, function(response) {
+            if (response && response.success) {
+                // 成功時は特に何もしない（必要ならここで通知）
+            } else {
+                let errorMsg = (response && response.error) ? response.error : 'Slack APIエラー';
+                alert(`Slackメッセージ送信失敗: ${errorMsg}`);
+                console.error('Slackメッセージ送信失敗:', errorMsg, response);
             }
-        );
+        });
     } catch (error) {
-        console.error('メッセージ送信処理中に例外が発生しました:', error);
-        alert(`メッセージ送信中にエラーが発生しました: ${error.message}`);
+        alert(`Slackメッセージ送信中にエラー: ${error.message}`);
+        console.error('Slackメッセージ送信中にエラー:', error);
     }
 }
 
