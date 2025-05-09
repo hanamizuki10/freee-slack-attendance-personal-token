@@ -1,8 +1,4 @@
-// カスタムアラートの表示
-function showCustomAlert(message) {
-    document.getElementById('customAlertMessage').innerHTML = message;
-    document.getElementById('customAlertOverlay').classList.add('active');
-}
+
 
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -43,8 +39,14 @@ document.addEventListener('DOMContentLoaded', function() {
         const slackUserToken = document.getElementById('slackUserToken').value;
         const slackChannelId = document.getElementById('slackChannelId').value;
         if (!slackUserToken || !slackChannelId) {
-            showCustomAlert('SlackユーザートークンとチャンネルIDを入力してください');
-            console.warn('[popup.js] 入力不足: slackUserToken, slackChannelId', { slackUserToken, slackChannelId });
+            // 不足項目を個別に明示
+            let missing = [];
+            if (!slackUserToken) missing.push('Slackユーザートークン');
+            if (!slackChannelId) missing.push('チャンネルID');
+            const message = `${missing.join('と')}が未入力です。`;
+            document.getElementById('saveStatus').textContent = message;
+            document.getElementById('saveStatus').style.color = '#d32f2f'; // エラー時は赤色
+            console.warn('[popup.js] 入力不足:', { slackUserToken, slackChannelId });
             return;
         }
         // カスタムメッセージを取得
@@ -69,10 +71,17 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             function(response) {
                 // console.log('[popup.js] saveSettingsレスポンス:', response);
+                const saveStatus = document.getElementById('saveStatus');
                 if (response.success) {
-                    showCustomAlert('設定を保存しました。<br>freeeの勤怠ページをリロードしてください（再読み込みしないと新しい設定が反映されません）');
+                    saveStatus.textContent = '設定を保存しました。freeeの勤怠ページをリロードしてください（再読み込みしないと新しい設定が反映されません）';
+                    saveStatus.style.color = '#2196F3'; // 通常時は青色
                 } else {
-                    showCustomAlert('設定の保存に失敗しました');
+                    let errorMsg = '設定の保存に失敗しました。';
+                    if (response && response.error) {
+                        errorMsg += ` エラー内容: ${response.error}`;
+                    }
+                    saveStatus.textContent = errorMsg;
+                    saveStatus.style.color = '#d32f2f'; // エラー時は赤色
                     console.error('[popup.js] 設定保存失敗:', response);
                 }
             }

@@ -79,7 +79,12 @@
             padding: 18px 18px 14px 18px; /* 上部余白を減らす */
             min-width: 320px;
             max-width: 90vw;
+        }
+        #customAlertMessage {
+            font-size: 1.1em;
+            margin-bottom: 10px;
             text-align: center;
+            color: red;
         }
         #customAlertBox h2 {
             margin: 0 0 10px 0;
@@ -132,13 +137,7 @@
         </div>
         
         <button id="saveButton">保存</button>
-    </div>
-    <div id="customAlertOverlay">
-      <div id="customAlertBox">
-        <h2>拡張機能 freee勤怠<br>Slack個人通知 の記述</h2>
-        <p id="customAlertMessage"></p>
-        
-      </div>
+        <div id="saveStatus" style="margin-top: 10px; min-height: 1.5em; font-size: 1em; color: #2196F3;"></div>
     </div>
     <script src="popup.js"></script>
 </body>
