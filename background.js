@@ -33,14 +33,14 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             messageBreakStart: request.messageBreakStart || '',
             messageBreakEnd: request.messageBreakEnd || ''
         }, function() {
-            // console.log('[background.js] saveSettings保存:', {
+          /* console.log('[background.js] saveSettings保存:', {
                 slackUserToken: request.slackUserToken,
                 slackChannelId: request.slackChannelId,
                 messageClockIn: request.messageClockIn,
                 messageClockOut: request.messageClockOut,
                 messageBreakStart: request.messageBreakStart,
                 messageBreakEnd: request.messageBreakEnd
-            });
+            }); */
             sendResponse({ success: true });
         });
         return true; // 非同期レスポンスのために必要
