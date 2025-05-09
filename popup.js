@@ -46,9 +46,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const messageBreakStart = document.getElementById('messageBreakStart').value;
         const messageBreakEnd = document.getElementById('messageBreakEnd').value;
 
-        // console.log('[popup.js] 保存ボタン押下: 保存内容', {
+        /* console.log('[popup.js] 保存ボタン押下: 保存内容', {
             slackUserToken, slackChannelId, messageClockIn, messageClockOut, messageBreakStart, messageBreakEnd
-        });
+        }); */
 
         chrome.runtime.sendMessage(
             {
