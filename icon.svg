@@ -1,0 +1,21 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="256" cy="256" r="240" fill="#2684FF"/>
+  <!-- 時計の輪郭 -->
+  <circle cx="256" cy="256" r="150" fill="white"/>
+  <!-- 時計の針のように中心から放射状に伸びるfreee風燕ライン（青）を3本配置 -->
+
+
+  <!-- 中央にSlackロゴ風カラフルクロス（＋）を大きめに配置 -->
+  <!-- 青（#36C5F0） -->
+  <rect x="186" y="206" width="140" height="56" rx="28" fill="#36C5F0"/>
+  <!-- 緑（#2EB67D） -->
+  <rect x="186" y="286" width="140" height="56" rx="28" fill="#2EB67D"/>
+  <!-- 赤（#E01E5A） -->
+  <rect x="156" y="236" width="56" height="140" rx="28" fill="#E01E5A"/>
+  <!-- 黄（#ECB22E） -->
+  <rect x="236" y="236" width="56" height="140" rx="28" fill="#ECB22E"/>
+
+  <!-- 丸の内側・やや右上にfreee風ツバメシルエット -->
+  <path d="M 260 200 Q 280 170 340 210 Q 310 210 290 240 Q 320 210 360 220 Q 320 240 290 280 Q 260 320 260 200 Z" fill="#2684FF" fill-opacity="0.92"/>
+
+</svg>

@@ -1,0 +1,10 @@
+{
+  "preferredLanguage": "ja-JP",
+  "description": "このプロジェクトでは日本語でのコミュニケーションを優先します",
+  "settings": {
+    "responseLanguage": "Japanese",
+    "codeComments": "Japanese",
+    "documentation": "Japanese"
+  },
+  "note": "このファイルは参考情報であり、Cascadeの動作を直接制御するものではありません。日本語での対話を促すための記録です。"
+}

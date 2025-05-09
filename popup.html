@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>freee Slack Attendance 設定</title>
+    <style>
+        body {
+            width: 350px;
+            padding: 10px;
+            font-family: Arial, sans-serif;
+            box-sizing: border-box;
+        }
+        .content {
+            width: 100%;
+            padding: 0 10px;
+            box-sizing: border-box;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 8px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            box-sizing: border-box;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        h3 {
+            margin: 10px 0 10px 0;
+        }
+        .message-group {
+            margin-top: 15px;
+            border-top: 1px solid #ddd;
+            padding-top: 10px;
+        }
+        .message-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+        .toggle-section {
+            cursor: pointer;
+            color: #2196F3;
+            margin: 10px 0;
+            user-select: none;
+        }
+        .custom-messages {
+            display: none;
+        }
+        .custom-messages.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h3>Slack Webhook URL</h3>
+        <input type="text" id="slackWebhookUrl" placeholder="https://hooks.slack.com/services/...">
+        
+        <div class="toggle-section" id="toggleMessages">▶ カスタムメッセージ設定</div>
+        
+        <div class="custom-messages" id="customMessages">
+            <div class="message-group">
+                <span class="message-label">出勤時のメッセージ:</span>
+                <input type="text" id="messageClockIn" placeholder="勤務開始します">
+            </div>
+            
+            <div class="message-group">
+                <span class="message-label">退勤時のメッセージ:</span>
+                <input type="text" id="messageClockOut" placeholder="退勤します">
+            </div>
+            
+            <div class="message-group">
+                <span class="message-label">休憩開始時のメッセージ:</span>
+                <input type="text" id="messageBreakStart" placeholder="休憩します">
+            </div>
+            
+            <div class="message-group">
+                <span class="message-label">休憩終了時のメッセージ:</span>
+                <input type="text" id="messageBreakEnd" placeholder="再開します">
+            </div>
+        </div>
+        
+        <button id="saveButton">保存</button>
+    </div>
+    <script src="popup.js"></script>
+</body>
+</html>

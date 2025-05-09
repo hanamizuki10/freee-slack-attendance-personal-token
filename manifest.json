@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "name": "freee勤怠Slack通知ツール",
+  "version": "1.0",
+  "description": "freeeの出勤・退勤ボタンをクリックするとSlackに通知を送信します",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://hooks.slack.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://*.freee.co.jp/*"],
+      "js": ["content.js"]
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "icon.png",
+    "32": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  }
+}
