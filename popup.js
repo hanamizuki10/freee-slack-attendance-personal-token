@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
             function(response) {
                 // console.log('[popup.js] saveSettingsレスポンス:', response);
                 if (response.success) {
-                    alert('設定を保存しました');
+                    alert('設定を保存しました。\nfreeeの勤怠ページをリロードしてください（再読み込みしないと新しい設定が反映されません）');
                 } else {
                     alert('設定の保存に失敗しました');
                     console.error('[popup.js] 設定保存失敗:', response);
